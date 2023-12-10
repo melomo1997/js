@@ -1,151 +1,108 @@
-// THE ACCOUNT OBJECT SHOULD HAVE THE FOLLWOING PROPERTIES:
-// name: the account holders name, should be a string
-// expenses: an array that should hold all of your expenses, can be empty from start
-// income: an array that should hold all of your income, can be empty from start
-// addExpenses: a function that vill add an expense to the expenses array
-// addIncome: a function that will add an income to the income array
-// listAllExpenses: a function that should list all the expenses in the expenses array
-// getSummary: a function that should summarize your total balances. It should show your total
-// income, your total expenses and also calculate your current balances (income - expenses).
-
-// create a function called menu()
-
-// the function menu() should only be responsible to show the different choices
-// for the user.
-
-// The menu() function should display the menu with different choices for the user
-// depending on what the user selects from the menu you should call on the correct
-// method or poperty from the account object. You can use a switch or if/else statement for your
-// different menu choices. Please motivate you choice in a comment.
-
-// TO DO LIST:
-
-//1. WE NEED A FUNCTION MENU:
-
-// 2. CREATE AN OBJECT FOR YOUR WEBSITE THAT HOLDS (NAME, EXPENSES, INCOME, ADDEXPENSES,ADDINCOME, LISTALLEXPENSES, AND A SUMMERY)
 const account = {
-    name: "cactus",
-    //expenses: ["gas", "food", "rent", "clothes"],
-    expenses: [],
-    // [{category: "gas", amount: 1000}, {category: "food", amount: 500}]
-    incomes: [],
+  name: "MeliKa",
+  //expenses: ["gas", "food", "rent", "clothes"],
+  expenses: [],
+  // [{category: "gas", amount: 1000}, {category: "food", amount: 500}]
+  incomes: [],
+  // addExpenses: FUNCTION AND ... .push, SO THAT IT WILL ADD AN ARRAY TO EXPENSES
+  addExpense: function () {
+    const category = prompt(
+      "What was your expense? (\nrent\ngas\nfood\nclothes)"
+    );
 
+    const amount = parseFloat(prompt("How much is your income?"));
 
+    this.expenses.push({ expensesCategory: category, expenseAmount: amount });
 
+    // const expensesAmount = parseFloat(prompt("How much is your expenses"));
+    // console.log(this.expenses);
+    menu();
+  },
+  addIncome: function () {
+    const amount = parseFloat(prompt("How much is your income?"));
 
-    addExpense: function () {const expensesAmount = parseFloat(prompt("How much is your expenses?"));
-  
+    this.incomes.push({
+      incomesAmount: amount,
+    });
     menu();
   },
 
 
+  listAllExpenses: function () {
+    // 1. we want to list all expenses we added in our array for the user
+    // 2. in order to list all elements in a array we need a loop (foreach)
+    // 3. each expense should be shown on one row with the category and amount
+    // 4. we want to the list show in an alert
 
+    let message = "";
+    // we need to declare message here so we can pass that to the alert
 
-   addIncome: function () {const amount = parseFloat(prompt("How much is your income?"));
-  
-      this.incomes.push({ "incomeCategory": "category", "incomeAmount": "amount "});
-      // now we save as an object with two properties: category and amount
-  
-      // 1. handle error so that a user cant leave the input empty
-      // 2. do the same thing in addExpenses as we did in addIncomes
-      // 3. addExpense to the menu
-  
-      menu();
-    },
+    this.expenses.forEach(function (expense) {
+      // expense inside () is going to represent ONE expense in our exoenses array
+      // so javascript that expense inside () is actually an object
 
+      // we are going to build a custom message just a normal string with our properties
 
+      message +=
+        "Expense category: " +
+        expense.expensesCategory +
+        " Expense amount: " +
+        expense.expenseAmount +
+        "\n";
 
+      //alert("Expense category " + expense.expensesCategory);
+      // this show ONE alert for EACH category which is not what we want
+    });
 
+    alert(message);
+  },
+  summary: function () {
 
-    listAllExpenses: function () {const category = prompt(
-            "What was your expense? (\nrent\ngas\nfood\nclothes)"
-          );
+      // 1. calculate total incomes - total expenses and show the result
 
-          this.incomes.push({ "incomeCategory": "category"  });
-          menu();
-    },
+    // 2. first we need to calculate the total incomes and save it in a variable, hint: you need to use a loop
+    let totalIncomes = 0;
+    let totalExpenses = 0;
+    
+    this.incomes.forEach(function (income) {
+      totalIncomes += income.incomesAmount
+    });
 
+    this.expenses.forEach(function (expense) {
+      totalExpenses += expense.expenseAmount
+    });
+    alert(`Your Total Incomes: ${totalIncomes} \n Your Total expenses: ${totalExpenses}`);
 
+    // 3. we need to do the same for expenses, keep in mind that you only are interested in expense.expenseAmount not the category
+    // 4. with this said we need two variables, one for total incomes and one for total expenses
+    // 5. then we need to create a new variable to store the result of totalIncomes - totalExpenses
+    // 6. once that is done you can show the result to the user for example in an alert
+    
+  },
+};
 
+//2. WE NEED A FUNCTION MENU:
+function menu() {
+  const choice = parseFloat(
+    prompt(
+      "Please select a choice :\n1.Add income\n2.Add expense\n3.List all expenses\n4. Get summary"
+    )
+  );
 
-
-    summary: function () {},
-    // summary: getSummary()
-  };
-
-
-
-  
-  function menu() {
-    const choice = parseFloat(
-      prompt(
-        "Please select a choice :\n1.Add income\n2.Add expense\n3.List all expenses\n4. Get summary"
-      )
-    );
-  
-    if (choice === 1) {
-      account.addIncome();
-    } else if (choice ===2){
-        account.addExpense();
-    }else if (choice === 3) {
-     account.listAllExpenses();
-    }else if (choice ===4){
-        account.summary();
-    }
+  // if/else STATEMENT:
+  if (choice === 1) {
+    account.addIncome();
+  } else if (choice === 2) {
+    account.addExpense();
+  } else if (choice === 3) {
+    account.listAllExpenses();
+  } else if (choice === 4) {
+    account.summary();
+  } else if (choice < 0 && choice > 4 && choice != Number) {
+    alert("Unvalid answer, choose a number between 1 to 4 please!");
+    menu();
   }
-  
-  //we should call it out:
-  menu();
-  
-  // function getSummary() {
-  //     alert(`your income is ${melinaObject.income}your total expenses ${melinaObject.expenses}`);
-  //     };
-  
-  // let answer = '';
-  // if (answer === '1') {
-  //   const income = parseFloat(prompt(
-  //     'How much is your income?'
-  //     ));
-  // } else if (answer === '2'){
-  //   const expenses = parseFloat(prompt(
-  //     'Add your expenses'
-  //   ));
-  // } else if (answer === '3'){
-  //   let expensesSave = parseFloat(prompt(
-  //     'What was your expense? (\nrent\ngas\nfood\nclothes)'
-  //   ));
-  // }
-  
-  /* function incomeChoice() {
-    const income = parseFloat(prompt("How much is your income?"));
-    return menu();
-  }
-  incomeChoice();
-  function expensesChoice() {
-    const expenses = parseFloat(prompt("Add your expenses"));
-    return menu();
-  }
-  expensesChoice();
-  function expensesSaveChoice() {
-    let expensesSave = parseFloat(
-      prompt("What was your expense? (\nrent\ngas\nfood\nclothes)")
-    );
-    return menu();
-  }
-  expensesSaveChoice(); */
-  // getSummary()
-  
-  //  switch (choice) {
-  //   case 1:
-  //     incomeChoice();
-  //     break;
-  //   case 2:
-  //     expensesChoice();
-  //     break;
-  //     case 3:
-  //     expensesSaveChoice();
-  //   default:
-  //     menu();
-  //     break;
-  // }
-  
+}
+
+//we should call it out:
+menu();
