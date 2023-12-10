@@ -27,7 +27,6 @@ const account = {
     menu();
   },
 
-
   listAllExpenses: function () {
     // 1. we want to list all expenses we added in our array for the user
     // 2. in order to list all elements in a array we need a loop (foreach)
@@ -71,6 +70,8 @@ const account = {
     this.expenses.forEach(function (expense) {
       totalExpenses += expense.expenseAmount
     });
+
+    const result = totalIncomes - totalExpenses;
     alert(`Your Total Incomes: ${totalIncomes} \n Your Total expenses: ${totalExpenses}`);
 
     // 3. we need to do the same for expenses, keep in mind that you only are interested in expense.expenseAmount not the category
